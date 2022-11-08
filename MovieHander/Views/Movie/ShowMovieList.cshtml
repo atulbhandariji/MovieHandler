@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Models.MovieItem>
+@{
+    ViewData["Title"] = "ShowMovieList";
+}
+<a href="@Url.Action("AddMovieItem", "Movie")">Add Movie</a>
+@if (Model == null || Model.Count() == 0)
+{
+    <p>no record found in this table</p>
+}
+else
+{
+    <section id="movieList">
+        <br />
+        <br />
+        <table width="600" border="1">
+            <tr>
+                <th>MovieName</th>
+                <th>ReleaseYear</th>
+                <th>Genre</th>
+                <th>Action(Delete)</th>
+                <th>Action(Edit)</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MovieName</td>
+                    <td>@item.ReleaseYear</td>
+                    <td>@item.Genre</td>
+
+                    <td>
+                        <a href="@Url.Action("DeleteMovieById", "Movie", new { MovieId = item.MovieId })">Delete Movie</a>
+                    </td>
+                    <td>
+                        <button>
+                            <a href="@Url.Action("EditMovieItem", "Movie", new { MovieId = item.MovieId })">Edit Movie</a>
+                        </button>
+                    </td>
+                </tr>
+            }
+        </table>
+        <br />
+        <br />
+        <br />
+    </section>
+}

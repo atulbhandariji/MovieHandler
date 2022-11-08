@@ -19,6 +19,8 @@ namespace MovieLibrary.MovieDALDBContext
 
         public List<MovieItem> GetFetchMovieList(int pageNumber);
 
+        public MovieItem GetMovieListById(int movieId);
+
 
     }
 }

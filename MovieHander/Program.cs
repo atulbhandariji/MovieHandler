@@ -1,7 +1,14 @@
+using MovieHander.DAL;
+using MovieLibrary.MovieDALDBContext;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//dependency injection
+builder.Services.AddScoped<IMovieData, MovieData>();
+builder.Services.AddScoped<IMovieDALData, MovieDALData>();
+
 
 var app = builder.Build();
 
@@ -18,6 +25,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Movie}/{action=ShowMovieList}/{id?}");
 
 app.Run();

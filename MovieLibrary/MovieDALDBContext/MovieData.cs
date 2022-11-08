@@ -32,6 +32,24 @@ namespace MovieLibrary.MovieDALDBContext
             sqlConnection.Close();
             return movieList;
         }
+
+        public MovieItem GetMovieListById(int movieId)
+        {
+
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            SqlCommand sqlCommand =new SqlCommand("select * from MovieListTable where MovieId=" + movieId + "", sqlConnection);
+            DataTable dataTable = new DataTable();
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+            sqlDataAdapter.Fill(dataTable);
+                movieItem.MovieId = Convert.ToInt32(dataTable.Rows[0]["MovieId"].ToString());
+                movieItem.MovieName = dataTable.Rows[0]["MovieName"].ToString();
+                movieItem.ReleaseYear = dataTable.Rows[0]["ReleaseYear"].ToString();
+                movieItem.ReleaseDate = dataTable.Rows[0]["ReleaseDate"].ToString();
+                movieItem.Genre = dataTable.Rows[0]["Genre"].ToString();
+            sqlConnection.Close();
+            return movieItem;
+        }
         public void AddMovie(MovieItem movieItem)
         {
             try
@@ -93,9 +111,6 @@ namespace MovieLibrary.MovieDALDBContext
             SqlParameter sqlParameterGenre = new SqlParameter();
             sqlParameterGenre.ParameterName = "@Genre";
             sqlParameterGenre.Value = movieItem.Genre;
-            SqlParameter sqlParameterReleaseDate = new SqlParameter();
-            sqlParameterReleaseDate.ParameterName = "@ReleaseDate";
-            sqlParameterReleaseDate.Value = movieItem.ReleaseDate;
             sqlCommand.Parameters.Add(sqlParameterGenre);
             sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
